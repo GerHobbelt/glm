@@ -23,6 +23,7 @@ endif()
 option(GLM_BUILD_LIBRARY "Build dynamic/static library" ON)
 option(GLM_BUILD_TESTS "Build the test programs" ${GLM_IS_MASTER_PROJECT})
 option(GLM_BUILD_INSTALL "Generate the install target" ${GLM_IS_MASTER_PROJECT})
+option(GLM_BUILD_PACKAGE "Build package suitable for FetchContent" FALSE)
 
 include(GNUInstallDirs)
 
@@ -287,4 +288,16 @@ if (GLM_BUILD_INSTALL)
 		"${CMAKE_COMMAND}" -P
 		"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
 	)
+endif()
+
+if (GLM_BUILD_PACKAGE)
+	set(package_files glm/ cmake/ CMakeLists.txt copy.txt)
+	set(zip_file ${CMAKE_CURRENT_BINARY_DIR}/glm-${GLM_VERSION}-src.zip)
+	add_custom_command(
+		OUTPUT ${zip_file}
+		COMMAND ${CMAKE_COMMAND} -E tar c ${zip_file} --format=zip -- ${package_files}
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		DEPENDS ${package_files}
+	)
+	add_custom_target(glm_package DEPENDS ${zip_file})
 endif()
