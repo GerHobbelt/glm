@@ -291,7 +291,7 @@ if (GLM_BUILD_INSTALL)
 endif()
 
 if (GLM_BUILD_PACKAGE)
-	set(package_files glm/ cmake/ CMakeLists.txt copy.txt)
+	set(package_files glm/ cmake/ CMakeLists.txt copying.txt)
 	set(zip_file ${CMAKE_CURRENT_BINARY_DIR}/glm-${GLM_VERSION}-src.zip)
 	add_custom_command(
 		OUTPUT ${zip_file}
